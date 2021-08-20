@@ -1,0 +1,33 @@
+
+.sidebar {
+    border-right: 1px solid var(--twitter-background);
+    flex: 0.3;
+    /* min-width: 250px; */
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.sidebar__tweet {
+    border: none !important;
+    background-color: rgba(29,161,242,1.00) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    text-transform: inherit !important;
+    border-radius: 30px !important;
+    height: 50px !important;
+    margin-top: 20px !important;
+}
+
+.menu {
+    border-radius: 30px !important;
+    margin-top: 50px !important;
+    display: flex;
+    align-items: center;
+}
+
+.profilePicture {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 10px;
+}

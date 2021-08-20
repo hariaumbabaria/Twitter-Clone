@@ -1,0 +1,16 @@
+
+.sideroption {
+    display: flex;
+    align-items: center;
+}
+
+.sideroption:hover {
+    background-color: #e8f5f6;
+    border-radius: 30px;
+}
+
+.sideroption>h2 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-left: 25px;
+}
