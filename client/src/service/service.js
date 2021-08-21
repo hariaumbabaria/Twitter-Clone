@@ -19,3 +19,12 @@ export const authenticateLogin = async (user) => {
         console.log('Error while calling login api', error);
     }
 }
+
+export const add_tweet = async (tweet) => {
+    try {
+        return await axios.post(`${url}/tweet`, tweet);
+    }
+    catch(error) {
+        console.log('Error while calling tweet api', error);
+    }
+}

@@ -4,6 +4,7 @@ import { AccountContext } from '../context/AccountProvider';
 import SidebarOption from "./SidebarOption";
 import {Link, useHistory} from 'react-router-dom';
 import { TwitterTimelineEmbed,TwitterShareButton, TwitterTweetEmbed} from 'react-twitter-embed';
+import { add_tweet } from '../service/service';
 import Feed from './Feed';
 
 //Icons
@@ -25,6 +26,7 @@ import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfie
 import './Sidebar.css';
 import './Feed.css';
 
+
 const useStyle = makeStyles (theme => ({
     component: {
         margin: '10px 150px',
@@ -45,13 +47,22 @@ const useStyle = makeStyles (theme => ({
     }
 }))
 
+const tweetInitialValues = {
+    username: '',
+    tweet: ''
+};
+
 const Sidebar = () => {
 
     const classes = useStyle();
 
     const {account, setAccount} = useContext(AccountContext);
 
-    console.log(account);
+    const [tweet, setTweet] = useState(tweetInitialValues);
+
+    const onValueChange = (e) => {
+        setTweet({ ...tweet, username: account.username, [e.target.name]: e.target.value });
+    }
 
     const history = useHistory();
 
@@ -68,6 +79,16 @@ const Sidebar = () => {
     const logout = () => {
         setAccount('');
         history.push('/');
+    }
+
+    const clickHandler = async () => {
+        let response = await add_tweet(tweet);
+        if(!response) {
+            alert("Tnvalid Tweet");
+            setTweet({ ...tweet, tweet: ''});
+            return;
+        }
+        setTweet(tweetInitialValues);
     }
 
     return (
@@ -104,7 +125,7 @@ const Sidebar = () => {
                         <Typography className="home" style={{fontWeight: 600, fontSize: 18}}>Home</Typography>
                         <Box className='tweetbox'>
                             <Avatar style={{marginLeft: '2px'}} />
-                            <input maxlength="140" style={{marginLeft: '20px', width: '100%' }} placeholder="What's happening ?"/>
+                            <input onChange={(e) => onValueChange(e)} name='tweet' maxlength="140" style={{marginLeft: '20px', width: '100%' }} placeholder="What's happening ?"/>
                         </Box>
                         <Box className="home" style={{marginTop: '15px', display: 'flex', alignItems: 'center'}}>
                             <ImageOutlinedIcon className="tweetbox2"/>
@@ -112,11 +133,11 @@ const Sidebar = () => {
                             <PollOutlinedIcon className="tweetbox2" />
                             <SentimentSatisfiedOutlinedIcon className="tweetbox2" />
                             <EventOutlinedIcon className="tweetbox2" />
-                            <Button className={classes.tweetButton}>Tweet</Button>
+                            <Button onClick={() => clickHandler()} className={classes.tweetButton}>Tweet</Button>
                         </Box>
                     </Box>
                     <Box>
-                        <Feed/>
+                        <Feed username={tweet.username}/>
                     </Box>
                 </Box>
             </Box>

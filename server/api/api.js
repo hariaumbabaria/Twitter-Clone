@@ -1,5 +1,6 @@
 import express from 'express';
 import User from '../schema/UserSchema.js';
+import Tweet from '../schema/Tweet.js';
 
 const router=express.Router();
 
@@ -25,4 +26,11 @@ router.post('/login', async (req, res, next) => {
         return res.status(401).json('Invalid Login');
     }
 })
+
+router.post('/tweet', async (req, res, next) => {
+    Tweet.create(req.body)
+    .then(data => res.json(data))
+    .catch(next => console.log(next));
+})
+
 export default router;

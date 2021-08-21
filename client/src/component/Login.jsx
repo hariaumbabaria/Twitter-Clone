@@ -51,7 +51,6 @@ const SignUp = () => {
 
     const clickHandler = async () => {
         let response = await authenticateLogin(login);
-        console.log(response);
         if(!response) {
             alert("invalid login");
             setLogin({ ...login, password: ''});
