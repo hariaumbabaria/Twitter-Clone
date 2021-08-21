@@ -1,0 +1,77 @@
+.feed::-webkit-scrollbar {
+    display: none;
+}
+
+.feed {
+    margin-left: 100px;
+    flex: 0.4;
+    border-right: 1px solid var(--twitter-background);
+    overflow-y: scroll;
+    min-width: 600px;
+    -ms-overflow-style: none;
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+}
+
+.feed__header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+    border-right: 1px solid var(--twitter-background);
+    padding: 15px 20px;
+}
+
+.tweetbox {
+    display: flex;
+    margin-top: 20px;
+    align-self: stretch;
+}
+
+.home {
+    border-bottom: 1px solid grey;
+}
+
+.tweetbox2 {
+    margin-left: 15px;
+    /* margin-bottom: 15px; */
+    color: rgba(29,161,242,1.00);
+    display: flex;
+}
+
+.widget {
+    flex: 0.4;
+    min-width: 400px;
+}
+
+.widget__input {
+    display: flex;
+    align-items: center;
+    background-color: #f5f8fa;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.widget__input>input {
+    border: none;
+    background-color: #f5f8fa;
+}
+
+.widget__searchIcon {
+    color: grey;
+}
+
+.widget__container {
+    margin-top: 15px;
+    margin-left: 20px;
+    padding: 20px;
+    background-color: #f5f8fa;
+    border-radius: 20px;
+}
+
+.widget__container>h2 {
+    font-size: 18px;
+    font-weight: 800;
+}
