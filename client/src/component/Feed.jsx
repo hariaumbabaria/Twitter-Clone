@@ -1,5 +1,5 @@
 
-import { Typography, Avatar, Box } from "@material-ui/core";
+import { Avatar, Box } from "@material-ui/core";
 import { useEffect, useState} from 'react';
 import axios from 'axios';
 import './Post.css';
@@ -18,48 +18,57 @@ const Feed = (props) => {
 
     var [ tweetdata, setTweetdata ] = useState([]);
 
-    const tweetfinder = async (name) => {
-        console.log(name);
+    const tweetfinder = async () => {
         try {
-            await axios.get(`${url}/tweet/search`,{'params':{username: name}})
+            await axios.get(`${url}/tweet/search`)
             .then ((res) => {
-                setTweetdata([...tweetdata, res.data]);
-                console.log(tweetdata);
+                    setTweetdata(tweetdata => ([...tweetdata, res.data]));
             })
         }catch(err) {
-            console.log('Error while finding tweet',err);
+            console.log('Error while finding User',err);
         }
     }
 
     useEffect(() => {
-        tweetfinder(username);
+        tweetfinder();
     }, [])
+
+    const tweetsearchUnique = [...new Map(tweetdata.map(item =>
+        [item['name'], item])).values()];
+
 
     return (
         <Box>
-                <div className="post">
-                    <div className="post__avatar">
-                    <Avatar/>
-                    </div>
-                    <div className="post__body">
-                    <div className="post__header">
-                    <div className="post__headerText">
-                    <h3> 
-                    {tweetdata.username}
-                    </h3>
-                    </div>
-                    <div className="post__headerDescription">
-                    <p>{tweetdata.tweet}</p>
-                    </div>
-                    </div>
-                    <div className="post__footer">
-                    <ChatBubbleOutlineIcon fontSize="small"/>
-                    <RepeatIcon fontSize="small"/>
-                    <FavoriteBorderIcon fontSize="small"/>
-                    <ShareIcon fontSize="small"/>
-                    </div>
-                    </div>
-                </div>
+                {
+                    (tweetsearchUnique[0] === undefined)?
+                        <div></div>:
+                            tweetsearchUnique[0].map((tweet, index) => (
+                            <div className="post">
+                                <div className="post__avatar">
+                                    <Avatar/>
+                                </div>
+                                <div className="post__body">
+                                    <div className="post__header">
+                                        <div className="post__headerText">
+                                            <h3>
+                                                {tweet.username}
+                                            </h3>
+                                        </div>
+                                        <div className="post__headerDescription">
+                                            <p>{tweet.tweet}</p>
+                                        </div>
+                                    </div>
+                                    <div className="post__footer">
+                                        <ChatBubbleOutlineIcon fontSize="small"/>
+                                        <RepeatIcon fontSize="small"/>
+                                        <FavoriteBorderIcon fontSize="small"/>
+                                        <ShareIcon fontSize="small"/>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    )
+                }
         </Box>
     )
 }

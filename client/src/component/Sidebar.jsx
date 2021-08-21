@@ -3,7 +3,7 @@ import { Typography, Box, makeStyles, Button, MenuItem, Menu, Avatar } from "@ma
 import { AccountContext } from '../context/AccountProvider';
 import SidebarOption from "./SidebarOption";
 import {Link, useHistory} from 'react-router-dom';
-import { TwitterTimelineEmbed,TwitterShareButton, TwitterTweetEmbed} from 'react-twitter-embed';
+import { TwitterTimelineEmbed, TwitterTweetEmbed} from 'react-twitter-embed';
 import { add_tweet } from '../service/service';
 import Feed from './Feed';
 
@@ -84,11 +84,16 @@ const Sidebar = () => {
     const clickHandler = async () => {
         let response = await add_tweet(tweet);
         if(!response) {
-            alert("Tnvalid Tweet");
+            alert("Invalid Tweet");
             setTweet({ ...tweet, tweet: ''});
             return;
         }
         setTweet(tweetInitialValues);
+        refreshPage();
+    }
+
+    function refreshPage() {
+        window.location.reload(false);
     }
 
     return (

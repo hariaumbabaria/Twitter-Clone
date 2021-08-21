@@ -33,4 +33,14 @@ router.post('/tweet', async (req, res, next) => {
     .catch(next => console.log(next));
 })
 
+router.get('/tweet/search', async (req,res,next) => {
+    const exist = await Tweet.find({});
+    if(exist){
+        return res.json(exist);
+    } 
+    else{
+        return res.json('no tweets found');
+    }
+})
+
 export default router;
